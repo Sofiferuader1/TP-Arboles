@@ -1,27 +1,27 @@
-
 # Ejercicio 5 - Árbol de superhéroes y villanos del MCU
 
-class Nodo:
+class Nodo: 	# Guarda nombre, si es héroe o villano y sus dos enlaces.
     def __init__(self, nombre, heroe):
         self.nombre = nombre
         self.heroe = heroe  # True si es héroe, False si es villano
-        self.izquierda = None
-        self.derecha = None
+        self.izquierda = None # Inicializa el hijo izquierdo vacío.
+        self.derecha = None # Inicializa el hijo derecho vacío.
 
 
-class Arbol:
+class Arbol: # 	Define la estructura del árbol.
     def __init__(self):
-        self.raiz = None
+        self.raiz = None # Inicialmente el árbol está vacío.
 
     # Insertar un personaje en el árbol
-    def insertar(self, nombre, heroe):
+    def insertar(self, nombre, heroe): # Crea un nodo y comienza su inserción.
         nuevo = Nodo(nombre, heroe)
 
         if self.raiz is None:
             self.raiz = nuevo
         else:
-            self._insertar(self.raiz, nuevo)
-
+            self._insertar(self.raiz, nuevo) # 	Busca recursivamente dónde ubicarlo según el nombre.
+            
+    # Inserto los personajes en un árbol binario de búsqueda.
     def _insertar(self, actual, nuevo):
         # Los nombres menores van a la izquierda
         if nuevo.nombre < actual.nombre:
@@ -39,7 +39,8 @@ class Arbol:
     # Inciso B: listar los villanos en orden alfabético
     def listar_villanos(self):
         self._listar_villanos(self.raiz)
-
+    # Recorro el árbol en inorden: izquierda, raíz y derecha.
+    # Muestro solamente los villanos, en orden alfabético.
     def _listar_villanos(self, nodo):
         if nodo is not None:
             # Primero recorremos el subárbol izquierdo
@@ -55,7 +56,7 @@ class Arbol:
     # Inciso C: mostrar los superhéroes que empiezan con C
     def heroes_con_c(self):
         self._heroes_con_c(self.raiz)
-
+  # Recorro el árbol en inorden y muestro solo los héroes cuyos nombres comienzan con C.
     def _heroes_con_c(self, nodo):
         if nodo is not None:
             # Recorremos el subárbol izquierdo
@@ -71,9 +72,9 @@ class Arbol:
     # Inciso D: contar cuántos superhéroes hay en el árbol
     def contar_heroes(self):
         return self._contar_heroes(self.raiz)
-
+    # Cuento recursivamente los héroes del árbol. Si el nodo está vacío, devuelvo 0; si es héroe, sumo 1.
     def _contar_heroes(self, nodo):
-        # Si el nodo está vacío, no sumamos nada
+        # Si el nodo está vacío, no sumamos nada ( # caso base de la recursividad )
         if nodo is None:
             return 0
 
@@ -93,13 +94,13 @@ class Arbol:
         # Inciso E: buscar personajes por proximidad
     def buscar_proximidad(self, texto):
         return self._buscar_proximidad(self.raiz, texto)
-
+   # Busco recursivamente un personaje cuyo nombre contenga el texto ingresado, sin distinguir mayúsculas y minúsculas.
     def _buscar_proximidad(self, nodo, texto):
         if nodo is None:
             return None
 
-        # Buscar si el texto coincide con una parte del nombre
-        if texto.lower() in nodo.nombre.lower():
+        # Busca si el texto ingresado está contenido dentro del nombre del personaje, ignorando mayúsculas.
+        if texto.lower() in nodo.nombre.lower(): 
             return nodo
 
         # Buscar en el subárbol izquierdo
@@ -114,7 +115,7 @@ class Arbol:
     # Eliminar un personaje del árbol
     def eliminar(self, nombre):
         self.raiz = self._eliminar(self.raiz, nombre)
-
+  # Elimino un nodo conservando el orden del árbol. Si tiene dos hijos, lo reemplazo por su sucesor inorden.
     def _eliminar(self, nodo, nombre):
         if nodo is None:
             return None
@@ -149,7 +150,7 @@ class Arbol:
 
         return nodo
 
-    # Corregir el nombre de un personaje
+    # Busco el personaje, elimino el nombre incorrecto y lo inserto nuevamente para mantener el orden del árbol.
     def corregir_nombre(self, texto, nombre_correcto):
         personaje = self.buscar_proximidad(texto)
 
@@ -167,7 +168,7 @@ class Arbol:
         else:
             print("No se encontró el personaje")
 
-    # Inciso F: listar los superhéroes en orden descendente
+    # Inciso F: listar los superhéroes en orden descendente. Recorro en inorden inverso: derecha, raíz e izquierda. Muestro solo los héroes, de Z a A.
     def heroes_descendente(self):
         self._heroes_descendente(self.raiz)
 
@@ -184,6 +185,7 @@ class Arbol:
             self._heroes_descendente(nodo.izquierda)
 
     # Inciso G: separar héroes y villanos en dos árboles
+    # Creo dos árboles independientes: uno de héroes y otro de villanos. Recorro el árbol original y separo los personajes.
     def generar_bosque(self):
         arbol_heroes = Arbol()
         arbol_villanos = Arbol()
@@ -209,7 +211,7 @@ class Arbol:
     # Contar todos los nodos de un árbol
     def contar_nodos(self):
         return self._contar_nodos(self.raiz)
-
+ # Cuento todos los nodos recursivamente. Sumo 1 por el nodo actual más los nodos de ambos subárboles.
     def _contar_nodos(self, nodo):
         if nodo is None:
             return 0
@@ -220,7 +222,7 @@ class Arbol:
     # Mostrar todos los personajes en orden alfabético
     def listar_inorden(self):
         self._listar_inorden(self.raiz)
-
+ # Recorro izquierda, raíz y derecha para mostrar todos los personajes en orden alfabético.
     def _listar_inorden(self, nodo):
         if nodo is not None:
             # Izquierda, raíz, derecha
