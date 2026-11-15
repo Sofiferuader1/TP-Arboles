@@ -41,7 +41,7 @@ class Arbol:
             else:
                 self._insertar(actual.derecha, nuevo)
 
-    # Inciso A: listar las criaturas y quién las derrotó en inorden
+    # Inciso A: Recorro izquierda, raíz y derecha. Muestro las criaturas en orden alfabético.
     def listar_inorden(self):
         self._listar_inorden(self.raiz)
 
@@ -59,7 +59,7 @@ class Arbol:
             # Finalmente recorremos el subárbol derecho
             self._listar_inorden(nodo.derecha)
 
-    # Inciso B: buscar una criatura por su nombre
+    # Inciso B: Busco por nombre comparando y avanzando a la izquierda o derecha según corresponda.
     def buscar(self, nombre):
         actual = self.raiz
 
@@ -73,7 +73,7 @@ class Arbol:
 
         return None
 
-    # Agregar una descripción a una criatura
+    # Busco la criatura y actualizo su descripción.
     def agregar_descripcion(self, nombre, descripcion):
         criatura = self.buscar(nombre)
 
@@ -83,7 +83,7 @@ class Arbol:
         else:
             print(f"No se encontró la criatura {nombre}")
 
-    # Inciso C: mostrar toda la información de una criatura
+   # Inciso C.  Muestro todos los datos de la criatura buscada.
     def mostrar_criatura(self, nombre):
         criatura = self.buscar(nombre)
 
@@ -95,7 +95,7 @@ class Arbol:
         else:
             print(f"No se encontró la criatura {nombre}")
 
-    # Inciso D: obtener los 3 héroes o dioses con más victorias
+    # Inciso D:Cuento las victorias por héroe en un diccionario. Ordeno de mayor a menor y muestro los primeros tres.
     def top_3_heroes(self):
         victorias = {}
 
@@ -109,9 +109,10 @@ class Arbol:
         )
 
         # Mostrar los primeros 3
-        for heroe, cantidad in ranking[:3]:
+        for heroe, cantidad in ranking[:3]: # Obtiene los primeros tres elementos del ranking.
             print(f"{heroe}: {cantidad} criaturas derrotadas")
 
+        # Recorro recursivamente el árbol y sumo una victoria al héroe que derrotó a cada criatura.
     def _contar_victorias(self, nodo, victorias):
         if nodo is not None:
             # Si la criatura fue derrotada, contamos una victoria
@@ -121,7 +122,7 @@ class Arbol:
                 if heroe not in victorias:
                     victorias[heroe] = 0
 
-                victorias[heroe] += 1
+                victorias[heroe] += 1 # Aumenta en uno las victorias de ese héroe.
 
             # Recorrer los dos subárboles
             self._contar_victorias(nodo.izquierda, victorias)
@@ -130,7 +131,7 @@ class Arbol:
     # Inciso E: listar las criaturas derrotadas por Heracles
     def criaturas_de_heracles(self):
         self._criaturas_de_heracles(self.raiz)
-
+    # Recorro en inorden y muestro las criaturas cuyo vencedor sea Heracles.
     def _criaturas_de_heracles(self, nodo):
         if nodo is not None:
             # Recorremos el subárbol izquierdo
@@ -159,7 +160,7 @@ class Arbol:
             # Recorrer el subárbol derecho
             self._criaturas_no_derrotadas(nodo.derecha)
 
-    # Inciso G: registrar quién capturó a una criatura
+    # Inciso G:Busco una criatura y guardo quién la capturó.
     def capturar_criatura(self, nombre, heroe):
         # Buscar la criatura por su nombre
         criatura = self.buscar(nombre)
@@ -175,7 +176,7 @@ class Arbol:
     def buscar_coincidencia(self, texto):
         print(f"\nResultados de la búsqueda '{texto}':")
         self._buscar_coincidencia(self.raiz, texto)
-
+  # Recorro el árbol y busco nombres que contengan el texto indicado, sin distinguir mayúsculas.
     def _buscar_coincidencia(self, nodo, texto):
         if nodo is not None:
             # Recorrer el subárbol izquierdo
@@ -191,7 +192,7 @@ class Arbol:
     # Inciso J: eliminar una criatura del árbol
     def eliminar(self, nombre):
         self.raiz = self._eliminar(self.raiz, nombre)
-
+    # Elimino el nodo manteniendo el orden del ABB. Si tiene dos hijos, utilizo el sucesor inorden.
     def _eliminar(self, nodo, nombre):
         # Si no encontramos la criatura
         if nodo is None:
@@ -231,7 +232,7 @@ class Arbol:
 
         return nodo
 
-    # Inciso K: modificar quién derrotó a una criatura
+    # Inciso K: Busco la criatura y actualizo quién la derrotó y la descripción de esa derrota.
     def modificar_derrota(self, nombre, heroe, descripcion):
         # Buscar la criatura en el árbol
         criatura = self.buscar(nombre)
@@ -247,7 +248,7 @@ class Arbol:
         else:
             print(f"No se encontró la criatura {nombre}")
 
-    # Inciso L: cambiar el nombre de una criatura
+    # Inciso L:Guardo los datos, elimino el nodo anterior y lo inserto con el nuevo nombre para mantener el orden.
     def cambiar_nombre(self, nombre_anterior, nombre_nuevo):
         # Buscar la criatura que queremos modificar
         criatura = self.buscar(nombre_anterior)
@@ -275,7 +276,7 @@ class Arbol:
         else:
             print(f"No se encontró la criatura {nombre_anterior}")
 
-    # Inciso M: mostrar las criaturas por nivel
+    # Inciso M: Recorro el árbol por niveles usando una cola FIFO. Atiendo cada nodo y agrego sus hijos al final.
     def listar_por_nivel(self):
         if self.raiz is None:
             print("El árbol está vacío")
@@ -302,7 +303,7 @@ class Arbol:
     # Inciso N: listar las criaturas capturadas por Heracles
     def capturadas_por_heracles(self):
         self._capturadas_por_heracles(self.raiz)
-
+    # Recorro en inorden y muestro las criaturas que fueron capturadas por Heracles.
     def _capturadas_por_heracles(self, nodo):
         if nodo is not None:
             # Recorrer el subárbol izquierdo
